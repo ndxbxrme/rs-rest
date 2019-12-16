@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "throttle.js",
+  "sourceRoot": "../src/",
+  "sources": [
+    "throttle.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,MAAM,CAAC,OAAP,GAAiB,QAAA,CAAC,IAAD,EAAO,IAAP,EAAa,OAAb,CAAA;AACf,QAAA,IAAA,EAAA,OAAA,EAAA,KAAA,EAAA,QAAA,EAAA,MAAA,EAAA;IAAA,OAAA,GAAU;IACV,IAAA,GAAO;IACP,MAAA,GAAS;IACT,OAAA,GAAU;IACV,QAAA,GAAW;IACX,IAAG,CAAC,OAAJ;MACE,OAAA,GAAU,CAAA,EADZ;;IAEA,KAAA,GAAQ,QAAA,CAAA,CAAA;MACN,QAAA,GAAc,OAAO,CAAC,OAAR,KAAmB,KAAtB,GAAiC,CAAjC,GAAwC,IAAI,CAAC,GAAL,CAAA;MACnD,OAAA,GAAU;MACV,MAAA,GAAS,IAAI,CAAC,KAAL,CAAW,OAAX,EAAoB,IAApB;MACT,IAAG,CAAC,OAAJ;QACE,OAAA,GAAU,IAAA,GAAO,KADnB;;IAJM;WAOR,QAAA,CAAA,CAAA;AACE,UAAA,GAAA,EAAA;MAAA,GAAA,GAAM,IAAI,CAAC,GAAL,CAAA;MACN,IAAG,CAAC,QAAD,IAAc,OAAO,CAAC,OAAR,KAAmB,KAApC;QACE,QAAA,GAAW,IADb;;MAEA,SAAA,GAAY,IAAA,GAAO,CAAC,GAAA,GAAM,QAAP;MACnB,OAAA,GAAU;MACV,IAAA,GAAO;MACP,IAAG,SAAA,IAAa,CAAb,IAAkB,SAAA,GAAY,IAAjC;QACE,IAAG,OAAH;UACE,YAAA,CAAa,OAAb;UACA,OAAA,GAAU,KAFZ;;QAGA,QAAA,GAAW;QACX,MAAA,GAAS,IAAI,CAAC,KAAL,CAAW,OAAX,EAAoB,IAApB;QACT,IAAG,CAAC,OAAJ;UACE,OAAA,GAAU,IAAA,GAAO,KADnB;SANF;OAAA,MAQK,IAAG,CAAC,OAAD,IAAa,OAAO,CAAC,QAAR,KAAoB,KAApC;QACH,OAAA,GAAU,UAAA,CAAW,KAAX,EAAkB,SAAlB,EADP;;aAEL;IAjBF;EAfe;AAAjB",
+  "sourcesContent": [
+    "module.exports = (func, wait, options) ->\r\n  context = undefined\r\n  args = undefined\r\n  result = undefined\r\n  timeout = null\r\n  previous = 0\r\n  if !options\r\n    options = {}\r\n  later = ->\r\n    previous = if options.leading == false then 0 else Date.now()\r\n    timeout = null\r\n    result = func.apply(context, args)\r\n    if !timeout\r\n      context = args = null\r\n    return\r\n  ->\r\n    now = Date.now()\r\n    if !previous and options.leading == false\r\n      previous = now\r\n    remaining = wait - (now - previous)\r\n    context = this\r\n    args = arguments\r\n    if remaining <= 0 or remaining > wait\r\n      if timeout\r\n        clearTimeout timeout\r\n        timeout = null\r\n      previous = now\r\n      result = func.apply(context, args)\r\n      if !timeout\r\n        context = args = null\r\n    else if !timeout and options.trailing != false\r\n      timeout = setTimeout later, remaining\r\n    result"
+  ]
+}

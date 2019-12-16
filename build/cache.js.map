@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "cache.js",
+  "sourceRoot": "../src/",
+  "sources": [
+    "cache.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;AAAA,MAAA,KAAA,EAAA,YAAA,EAAA;;EAAA,IAAA,GAAO,OAAA,CAAQ,QAAR;;EACP,KAAA,GAAQ,CAAA;;EACR,YAAA,GAAe;;EACf,MAAM,CAAC,OAAP,GACE;IAAA,UAAA,EAAY,QAAA,CAAC,QAAD,EAAW,IAAX,EAAiB,GAAjB,CAAA;AACV,UAAA;MAAA,IAAG,CAAI,YAAP;QACE,CAAA,GAAI,IAAA,CAAK,IAAI,CAAC,SAAL,CAAe,IAAA,IAAQ,CAAA,CAAvB,CAAL;QACJ,IAAG,CAAI,KAAM,CAAA,QAAA,CAAb;UACE,KAAM,CAAA,QAAA,CAAN,GAAkB,CAAA,EADpB;;eAEA,KAAM,CAAA,QAAA,CAAU,CAAA,CAAA,CAAhB,GAAsB,IAAI,CAAC,SAAL,CAAe,GAAf,EAJxB;;IADU,CAAZ;IAMA,cAAA,EAAgB,QAAA,CAAC,QAAD,EAAW,IAAX,CAAA;AACd,UAAA,CAAA,EAAA,MAAA,EAAA;MAAA,IAAG,CAAI,YAAP;QACE,CAAA,GAAI,IAAA,CAAK,IAAI,CAAC,SAAL,CAAe,IAAA,IAAQ,CAAA,CAAvB,CAAL;QACJ,IAAG,KAAM,CAAA,QAAA,CAAT;UACE,IAAG,KAAM,CAAA,QAAA,CAAU,CAAA,CAAA,CAAnB;YACE,GAAA,GAAM,KAAM,CAAA,QAAA,CAAU,CAAA,CAAA;YACtB,MAAA,GAAS,IAAI,CAAC,KAAL,CAAW,GAAX;AACT,mBAAO,OAHT;WADF;SAFF;;AAOA,aAAO;IARO,CANhB;IAeA,UAAA,EAAY,QAAA,CAAC,QAAD,CAAA;MACV,IAAG,QAAH;eACE,OAAO,KAAM,CAAA,QAAA,EADf;OAAA,MAAA;eAGE,KAAA,GAAQ,CAAA,EAHV;;IADU;EAfZ;AAJF",
+  "sourcesContent": [
+    "hash = require './hash'\r\ncache = {}\r\ndisableCache = false\r\nmodule.exports = \r\n  addToCache: (endpoint, args, obj) ->\r\n    if not disableCache\r\n      h = hash JSON.stringify args or {}\r\n      if not cache[endpoint]\r\n        cache[endpoint] = {}\r\n      cache[endpoint][h] =  JSON.stringify obj\r\n  fetchFromCache: (endpoint, args) ->\r\n    if not disableCache\r\n      h = hash JSON.stringify args or {}\r\n      if cache[endpoint]\r\n        if cache[endpoint][h]\r\n          str = cache[endpoint][h]\r\n          newvar = JSON.parse str\r\n          return newvar\r\n    return null\r\n  clearCache: (endpoint) ->\r\n    if endpoint\r\n      delete cache[endpoint]\r\n    else\r\n      cache = {}"
+  ]
+}

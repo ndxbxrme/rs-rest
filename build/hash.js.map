@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "hash.js",
+  "sourceRoot": "../src/",
+  "sources": [
+    "hash.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;EAAA,MAAM,CAAC,OAAP,GAAiB,QAAA,CAAC,GAAD,CAAA;AACf,QAAA,CAAA,EAAA;IAAA,CAAA,GAAI;IACJ,CAAA,GAAI,GAAG,CAAC;AACR,WAAM,CAAN;MACE,CAAA,GAAI,CAAC,CAAA,GAAI,EAAL,CAAA,GAAW,GAAG,CAAC,UAAJ,CAAe,EAAE,CAAjB;IADjB;WAEA;EALe;AAAjB",
+  "sourcesContent": [
+    "module.exports = (str) ->\r\n  h = 5381\r\n  i = str.length\r\n  while i\r\n    h = (h * 33) ^ str.charCodeAt --i\r\n  h"
+  ]
+}
